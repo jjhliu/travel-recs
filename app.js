@@ -5,15 +5,14 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
 const axios = require('axios');
-// const db = require ('/data/database');
+const db = require (__dirname + "/data/database.js");
 
 const homeStartingContent= "Planning your next adventure? Find out what your community has to recommend by viewing lists on Google Map. Contribute to this list by recommending new locations too!"
-const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
+const aboutContent = "Getting travel recommmendations from your community of trusted circles has never been easier. Now simply browse or search for the cities you are planning to visit and click on the Google Maps Link to see what locations were recommended for that city. Use this website as a central directory for travel recommendations for various cities around the world. In addition, contribute your recommendations by sharing your Google Maps link for a new city so that your community can find your top recommendations too. Have a great trip!";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 
 const app = express();
 
-const UNSPLASH_ACCESS_KEY = 'QvGl79G0m-V4qD5BIl3BMxJyI2aCvxvSBMtty9e829U';
 let imageUrl = "";
 let cityName = "";
 
@@ -27,19 +26,32 @@ let postsArray = [];
 
 
 app.get("/", function(req,res){
-  postsArray.sort((a,b)=>{
-    let fa = a.title.toLowerCase(),
-        fb = b.title.toLowerCase();
-  
-        if (fa<fb){
-          return -1;
-        }
-        if (fa>fb){
-          return 1;
-        }
-        return 0;
-        });
-  res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName});
+
+  db.query("SELECT * FROM posts",(error,response) =>{
+    if (!error){
+      // If query is successful, perform all actions here.
+      console.log(response.rows);
+      postsArray = response.rows;
+
+      postsArray.sort((a,b)=>{
+        let fa = a.city_name.toLowerCase(),
+            fb = b.city_name.toLowerCase();
+      
+            if (fa<fb){
+              return -1;
+            }
+            if (fa>fb){
+              return 1;
+            }
+            return 0;
+            });
+      res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName});
+
+    } else {
+      console.log(error.message);
+    }
+  });
+
 });
 
 
@@ -57,19 +69,27 @@ app.get('/compose', (req, res) => {
 
 app.post('/compose', async function (req, res) {
   try {
-      cityName = req.body.postTitle;
+      cityName = req.body.postTitle[0].toUpperCase()+ req.body.postTitle.substring(1);
+      const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
       const apiUrl = `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${UNSPLASH_ACCESS_KEY}`;
 
       const response = await axios.get(apiUrl);
 
-      const post = {
-        title:req.body.postTitle,
-        content:req.body.postBody,
-        description:req.body.postDescription,
-        imageUrl: response.data.urls.regular,
-      };
-    
-      postsArray.push(post);
+      // const post = {
+      //   city_name:req.body.postTitle,
+      //   travel_url:req.body.postBody,
+      //   description:req.body.postDescription,
+      //   image_url: response.data.urls.regular,
+      // };
+
+      db.query({
+        text:"INSERT INTO posts(city_name,travel_url,description,image_url) VALUES($1,$2,$3,$4)",
+        values: [
+          cityName,
+          req.body.postBody,
+          req.body.postDescription,
+          response.data.urls.regular,
+        ] } );
       res.redirect('/');
 
   } catch (error) {
@@ -82,13 +102,13 @@ app.post("/search", function(req, res) {
   const searchTerm = _.lowerCase(req.body.searchCity);
 
   postsArray.forEach(function(post) {
-    const storedTitle = _.lowerCase(post.title);
+    const storedTitle = _.lowerCase(post.city_name);
     if (storedTitle === searchTerm) {
       res.render("post",{
-        title: post.title,
-        content: post.content,
+        title: post.city_name,
+        content: post.travel_url,
         description: post.description,
-        image:post.imageUrl,
+        image:post.image_url,
       });
     }
     });
@@ -101,13 +121,13 @@ app.get("/posts/:query",function(req,res){
   const searchedTitle = _.lowerCase(req.params.query);
   
 postsArray.forEach(function(post) {
-  const storedTitle = _.lowerCase(post.title);
+  const storedTitle = _.lowerCase(post.city_name);
   if (storedTitle === searchedTitle) {
     res.render("post",{
-      title: post.title,
-      content: post.content,
+      title: post.city_name,
+      content: post.travel_url,
       description: post.description,
-      image:post.imageUrl,
+      image:post.image_url,
     });
   }
 });
