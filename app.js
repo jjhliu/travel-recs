@@ -70,10 +70,10 @@ app.get('/compose', (req, res) => {
 app.post('/compose', async function (req, res) {
   try {
       cityName = req.body.postTitle[0].toUpperCase()+ req.body.postTitle.substring(1);
-      // const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
-      // const apiUrl = `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${UNSPLASH_ACCESS_KEY}`;
+      const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
+      const apiUrl = `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${UNSPLASH_ACCESS_KEY}`;
 
-      // const response = await axios.get(apiUrl);
+      const response = await axios.get(apiUrl);
 
       // const post = {
       //   city_name:req.body.postTitle,
