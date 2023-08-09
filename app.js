@@ -25,30 +25,30 @@ let postsArray = [];
 
 app.get("/", function(req,res){
 
-  db.query("SELECT * FROM posts",(error,response) =>{
-    if (!error){
-      // If query is successful, perform all actions here.
-      console.log(response.rows);
-      postsArray = response.rows;
+  // db.query("SELECT * FROM posts",(error,response) =>{
+  //   if (!error){
+  //     // If query is successful, perform all actions here.
+  //     console.log(response.rows);
+  //     postsArray = response.rows;
 
-      postsArray.sort((a,b)=>{
-        let fa = a.city_name.toLowerCase(),
-            fb = b.city_name.toLowerCase();
+  //     postsArray.sort((a,b)=>{
+  //       let fa = a.city_name.toLowerCase(),
+  //           fb = b.city_name.toLowerCase();
       
-            if (fa<fb){
-              return -1;
-            }
-            if (fa>fb){
-              return 1;
-            }
-            return 0;
-            });
-      res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName});
+  //           if (fa<fb){
+  //             return -1;
+  //           }
+  //           if (fa>fb){
+  //             return 1;
+  //           }
+  //           return 0;
+  //           });
+  //     res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName});
 
-    } else {
-      console.log(error.message);
-    }
-  });
+  //   } else {
+  //     console.log(error.message);
+  //   }
+  // });
 
   res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName})
 
@@ -75,22 +75,15 @@ app.post('/compose', async function (req, res) {
 
       const response = await axios.get(apiUrl);
 
-      // const post = {
-      //   city_name:req.body.postTitle,
-      //   travel_url:req.body.postBody,
-      //   description:req.body.postDescription,
-      //   image_url: response.data.urls.regular,
-      // };
-
-      db.query({
-        text:"INSERT INTO posts(city_name,travel_url,description,image_url) VALUES($1,$2,$3,$4)",
-        values: [
-          cityName,
-          req.body.postBody,
-          req.body.postDescription,
-          response.data.urls.regular,
-        ] } );
-      res.redirect('/');
+      // db.query({
+      //   text:"INSERT INTO posts(city_name,travel_url,description,image_url) VALUES($1,$2,$3,$4)",
+      //   values: [
+      //     cityName,
+      //     req.body.postBody,
+      //     req.body.postDescription,
+      //     response.data.urls.regular,
+      //   ] } );
+      // res.redirect('/');
 
   } catch (error) {
       console.error('Error fetching image:', error.message);
@@ -132,7 +125,6 @@ postsArray.forEach(function(post) {
   }
 });
 });
-
 
 app.listen(process.env.PORT || 3000, function() {
   console.log("Server started on port 3000");
