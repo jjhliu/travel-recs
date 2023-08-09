@@ -21,7 +21,17 @@ const client = new Client ({
     },
 });
 
-client.connect();
+// client.connect();
+
+module.exports.connect = async () => {
+    try {
+        await client.connect();
+        console.log("Connected to the database");
+    } catch (error) {
+        console.error("Error connecting to the database:", error.message);
+        throw error;
+    }
+};
 
 // client.query("SELECT * FROM posts", (err,res)=>{
 //     if(!err){
