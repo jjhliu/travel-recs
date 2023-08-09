@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
 const axios = require('axios');
-const db = require (__dirname + "/data/database.js");
+// const db = require (__dirname + "/data/database.js");
 
 const homeStartingContent= "Planning your next adventure? Find out what your community has to recommend by viewing lists on Google Map. Contribute to this list by recommending new locations too!"
 const aboutContent = "Getting travel recommmendations from your community of trusted circles has never been easier. Now simply browse or search for the cities you are planning to visit and click on the Google Maps Link to see what locations were recommended for that city. Use this website as a central directory for travel recommendations for various cities around the world. In addition, contribute your recommendations by sharing your Google Maps link for a new city so that your community can find your top recommendations too. Have a great trip!";
@@ -27,30 +27,32 @@ let postsArray = [];
 
 app.get("/", function(req,res){
 
-  db.query("SELECT * FROM posts",(error,response) =>{
-    if (!error){
-      // If query is successful, perform all actions here.
-      console.log(response.rows);
-      postsArray = response.rows;
+  // db.query("SELECT * FROM posts",(error,response) =>{
+  //   if (!error){
+  //     // If query is successful, perform all actions here.
+  //     console.log(response.rows);
+  //     postsArray = response.rows;
 
-      postsArray.sort((a,b)=>{
-        let fa = a.city_name.toLowerCase(),
-            fb = b.city_name.toLowerCase();
+  //     postsArray.sort((a,b)=>{
+  //       let fa = a.city_name.toLowerCase(),
+  //           fb = b.city_name.toLowerCase();
       
-            if (fa<fb){
-              return -1;
-            }
-            if (fa>fb){
-              return 1;
-            }
-            return 0;
-            });
-      res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName});
+  //           if (fa<fb){
+  //             return -1;
+  //           }
+  //           if (fa>fb){
+  //             return 1;
+  //           }
+  //           return 0;
+  //           });
+  //     res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName});
 
-    } else {
-      console.log(error.message);
-    }
-  });
+  //   } else {
+  //     console.log(error.message);
+  //   }
+  // });
+
+  res.render("home", {startingContent: homeStartingContent, posts: postsArray, imageUrl: imageUrl, cityName: cityName})
 
 });
 
