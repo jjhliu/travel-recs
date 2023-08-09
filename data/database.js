@@ -31,4 +31,4 @@ client.query("SELECT * FROM posts", (err,res)=>{
     }
 });
 
-// module.exports=client;
+module.exports=client;
