@@ -21,7 +21,7 @@ const client = new Client ({
     },
 });
 
-// client.connect();
+client.connect();
 
 // client.query("SELECT * FROM posts", (err,res)=>{
 //     if(!err){
