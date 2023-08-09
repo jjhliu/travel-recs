@@ -21,9 +21,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-
 let postsArray = [];
-
 
 app.get("/", function(req,res){
 
@@ -72,10 +70,10 @@ app.get('/compose', (req, res) => {
 app.post('/compose', async function (req, res) {
   try {
       cityName = req.body.postTitle[0].toUpperCase()+ req.body.postTitle.substring(1);
-      const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
-      const apiUrl = `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${UNSPLASH_ACCESS_KEY}`;
+      // const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
+      // const apiUrl = `https://api.unsplash.com/photos/random?query=${cityName}&client_id=${UNSPLASH_ACCESS_KEY}`;
 
-      const response = await axios.get(apiUrl);
+      // const response = await axios.get(apiUrl);
 
       // const post = {
       //   city_name:req.body.postTitle,
@@ -84,15 +82,15 @@ app.post('/compose', async function (req, res) {
       //   image_url: response.data.urls.regular,
       // };
 
-      db.query({
-        text:"INSERT INTO posts(city_name,travel_url,description,image_url) VALUES($1,$2,$3,$4)",
-        values: [
-          cityName,
-          req.body.postBody,
-          req.body.postDescription,
-          response.data.urls.regular,
-        ] } );
-      res.redirect('/');
+      // db.query({
+      //   text:"INSERT INTO posts(city_name,travel_url,description,image_url) VALUES($1,$2,$3,$4)",
+      //   values: [
+      //     cityName,
+      //     req.body.postBody,
+      //     req.body.postDescription,
+      //     response.data.urls.regular,
+      //   ] } );
+      // res.redirect('/');
 
   } catch (error) {
       console.error('Error fetching image:', error.message);
