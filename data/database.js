@@ -23,14 +23,14 @@ const client = new Client ({
 
 // client.connect();
 
-client.connect()
-    .then(() => {
-        console.log("Connected to the database");
-    })
-    .catch((error) => {
-        console.error("Error connecting to the database:", error.message);
-        process.exit(1);
-    });
+// client.connect()
+//     .then(() => {
+//         console.log("Connected to the database");
+//     })
+//     .catch((error) => {
+//         console.error("Error connecting to the database:", error.message);
+//         process.exit(1);
+//     });
 
 // client.query("SELECT * FROM posts", (err,res)=>{
 //     if(!err){
