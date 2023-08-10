@@ -3,7 +3,7 @@ console.log("Hello World");
 // require("dotenv").config();
 
 //We're using the Postgres package
-// const { Client } = require("pg");
+const { Client } = require("pg");
 
 //we're using different packages to enable the App to find the right path for obtaining the SSL Certs
 // const fs = reequire("fs");
