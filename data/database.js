@@ -1,9 +1,9 @@
 // require("dotenv").config();
 
-// //We're using the Postgres package
-// const { Client } = require("pg");
+//We're using the Postgres package
+const { Client } = require("pg");
 
-// //we're using different packages to enable the App to find the right path for obtaining the SSL Certs
+//we're using different packages to enable the App to find the right path for obtaining the SSL Certs
 // const fs = require("fs");
 // const path = require("path");
 // const caCertPath = path.join(__dirname,"..","certs","global-bundle.pem");
