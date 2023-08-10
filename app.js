@@ -6,7 +6,7 @@ const ejs = require("ejs");
 const _ = require('lodash');
 const app = express();
 const axios = require('axios');
-require("dotenv").config();
+// require("dotenv").config();
 // const db = require(__dirname + "/data/database.js");
 
 const homeStartingContent= "Planning your next adventure? Find out what your community has to recommend by viewing lists on Google Map. Contribute to this list by recommending new locations too!"
