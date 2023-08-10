@@ -4,14 +4,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
+const app = express();
 const axios = require('axios');
-// const db = require(__dirname + "/data/database.js");
+const db = require(__dirname + "/data/database.js");
 
 const homeStartingContent= "Planning your next adventure? Find out what your community has to recommend by viewing lists on Google Map. Contribute to this list by recommending new locations too!"
 const aboutContent = "Getting travel recommmendations from your community of trusted circles has never been easier. Now simply browse or search for the cities you are planning to visit and click on the Google Maps Link to see what locations were recommended for that city. Use this website as a central directory for travel recommendations for various cities around the world. In addition, contribute your recommendations by sharing your Google Maps link for a new city so that your community can find your top recommendations too. Have a great trip!";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
-
-const app = express();
 
 let imageUrl = "";
 let cityName = "";
@@ -127,6 +126,6 @@ postsArray.forEach(function(post) {
 });
 
 app.listen(process.env.PORT || 3000, function() {
-  console.log("Server started on port 3000");
+  console.log("Server started on port" + process.env.PORT);
 });
 
