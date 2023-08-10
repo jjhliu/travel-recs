@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 
 // //We're using the Postgres package
 // const { Client } = require("pg");
