@@ -7,7 +7,7 @@ const axios = require('axios');
 
 // All the packages needed for database.js
 require("dotenv").config();
-const { Client } = require("pg");
+const pg = require("pg");
 const fs = require("fs");
 const path = require("path");
 const caCertPath = path.join(__dirname,"certs","global-bundle.pem");
@@ -30,7 +30,7 @@ let postsArray = [];
 
 // EVERYTHING IN THE DATABASE.JS FILE
 
-const client = new Client ({
+const client = new pg.Client ({
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
