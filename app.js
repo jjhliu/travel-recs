@@ -1,13 +1,19 @@
 //jshint esversion:6
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require('lodash');
-const app = express();
 const axios = require('axios');
-const db = require(__dirname + "/database.cjs");
 
+// All the packages needed for database.js
+require("dotenv").config();
+const { Client } = require("pg");
+const fs = require("fs");
+const path = require("path");
+const caCertPath = path.join(__dirname,"certs","global-bundle.pem");
+const caCert = fs.readFileSync(caCertPath);
+
+const app = express();
 const homeStartingContent= "Planning your next adventure? Find out what your community has to recommend by viewing lists on Google Map. Contribute to this list by recommending new locations too!"
 const aboutContent = "Getting travel recommmendations from your community of trusted circles has never been easier. Now simply browse or search for the cities you are planning to visit and click on the Google Maps Link to see what locations were recommended for that city. Use this website as a central directory for travel recommendations for various cities around the world. In addition, contribute your recommendations by sharing your Google Maps link for a new city so that your community can find your top recommendations too. Have a great trip!";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
@@ -21,6 +27,38 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 let postsArray = [];
+
+// EVERYTHING IN THE DATABASE.JS FILE
+
+const client = new Client ({
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    ssl: {
+        ca: caCert,
+    },
+});
+
+// client.connect();
+
+client.connect()
+    .then(() => {
+        console.log("Connected to the database");
+    })
+    .catch((error) => {
+        console.error("Error connecting to the database:", error.message);
+        process.exit(1);
+    });
+
+client.query("SELECT * FROM posts", (err,res)=>{
+    if(!err){
+        console.log(res.rows);
+    } else {
+        console.log(err.message);
+    }
+});
 
 app.get("/", function(req,res){
 
