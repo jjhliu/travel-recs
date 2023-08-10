@@ -6,7 +6,7 @@ const _ = require('lodash');
 const axios = require('axios');
 
 // All the packages needed for database.js
-require("dotenv").config();
+// require("dotenv").config();
 const pg = require("pg");
 const fs = require("fs");
 const path = require("path");
