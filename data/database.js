@@ -9,16 +9,16 @@ const caCert = fs.readFileSync(caCertPath);
 
 require("dotenv").config();
 
-// const client = new Client ({
-//     host: process.env.DB_HOST,
-//     database: process.env.DB_DATABASE,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASSWORD,
-//     port: process.env.DB_PORT,
-//     ssl: {
-//         ca: caCert,
-//     },
-// });
+const client = new Client ({
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+    ssl: {
+        ca: caCert,
+    },
+});
 
 // client.connect();
 
@@ -39,4 +39,4 @@ require("dotenv").config();
 //     }
 // });
 
-module.exports=client;
+module.exports = client;
