@@ -9,18 +9,18 @@
 // const caCertPath = path.join(__dirname,"..","certs","global-bundle.pem");
 // const caCert = fs.readFileSync(caCertPath);
 
-// // const client = new Client ({
-// //     host: process.env.DB_HOST,
-// //     database: process.env.DB_DATABASE,
-// //     user: process.env.DB_USER,
-// //     password: process.env.DB_PASSWORD,
-// //     port: process.env.DB_PORT,
-// //     ssl: {
-// //         ca: caCert,
-// //     },
-// // });
+// const client = new Client ({
+//     host: process.env.DB_HOST,
+//     database: process.env.DB_DATABASE,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     port: process.env.DB_PORT,
+//     ssl: {
+//         ca: caCert,
+//     },
+// });
 
-// // client.connect();
+// client.connect();
 
 // // client.connect()
 // //     .then(() => {
@@ -31,12 +31,12 @@
 // //         process.exit(1);
 // //     });
 
-// // client.query("SELECT * FROM posts", (err,res)=>{
-// //     if(!err){
-// //         console.log(res.rows);
-// //     } else {
-// //         console.log(err.message);
-// //     }
-// // });
+// client.query("SELECT * FROM posts", (err,res)=>{
+//     if(!err){
+//         console.log(res.rows);
+//     } else {
+//         console.log(err.message);
+//     }
+// });
 
-// // module.exports = client;
+// module.exports = client;
