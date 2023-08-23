@@ -106,7 +106,7 @@ app.post("/search", function(req, res) {
   });
 
   // else {
-  //   res.status(404).send('City not found');}}
+    //   res.status(404).send('City not found');}
 
 app.get("/posts/:query",function(req,res){
   const searchedTitle = _.lowerCase(req.params.query);
