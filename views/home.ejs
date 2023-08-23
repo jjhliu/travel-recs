@@ -10,7 +10,7 @@
 
                 <% posts.forEach(function(post){ %>
                     <h1 class="body" style="text-align: center;"><%=post.city_name%></h1> 
-                    <h4 style="text-align: center;"><a href="<%= post.travel_url %>" class="lead fw-normal text-muted mb-5 mb-lg-0">Google Map Link</a></h4>
+                    <h4 style="text-align: center;"><a href="<%= post.travel_url %>" class="lead fw-normal text-muted mb-5 mb-lg-0">Google Map List</a></h4>
                     <div style="text-align: center;"> <img src="<%= post.image_url %>"" alt="<%= post.city_name %>" style="width: 400px;"></div>
                     <h5 style="text-align: center;"><a href="/posts/<%= post.city_name %>">Read More</a></h5>
                     <% }); %>
