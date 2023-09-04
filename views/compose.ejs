@@ -2,6 +2,43 @@
 
 <h1>Share Recommendations</h1>
 
+<form class=" " action="/compose" method="post" onsubmit="return validateForm()">
+  <div class="form-group">
+    <label for="exampleInputTitle">City Name</label>
+    <input type="text" class="form-control" name="postTitle" placeholder="Enter Name of City">
+  </div>
+  <div class="form-group">
+    <label for="googleMapsLink">Google Maps Shared List (create a list of places on Google Maps: <a href="https://support.google.com/maps/answer/7280933?hl=en&co=GENIE.Platform%3DAndroid&oco=0" target="_blank">find out how here</a>)</label>
+    <textarea class="form-control" id="googleMapsLink" name="postBody" rows="1" placeholder="Enter Google Maps link" required></textarea>
+    <p id="validationMessage" style="color: red;"></p>
+  </div>
+
+  <div class="form-group">
+    <label for="inputDescription">Describe what's special about this city:</label>
+    <textarea class="form-control" name="postDescription" rows="3" placeholder="Enter Description"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Publish</button>
+</form>
+
+<script>
+  function validateForm() {
+    const googleMapsLink = document.getElementById('googleMapsLink').value;
+    const validationMessage = document.getElementById('validationMessage');
+    
+    // Check if the link contains 'goo.gl/maps'
+    if (!googleMapsLink.includes('goo.gl/maps')) {
+      validationMessage.textContent = 'Please enter a valid Google Maps Shared List link.';
+      return false; // Prevent form submission
+    } else {
+      validationMessage.textContent = ''; // Clear validation message
+      return true; // Allow form submission
+    }
+  }
+</script>
+
+
+<!-- <h1>Share Recommendations</h1>
+
 
   <form class=" " action="/compose" method="post">
     <div class="form-group">
@@ -10,7 +47,7 @@
     </div>
     <div class="form-group">
       <label for="googleMapsLink">Google Maps Shared List (create a list of places on Google Maps: <a href=https://support.google.com/maps/answer/7280933?hl=en&co=GENIE.Platform%3DAndroid&oco=0>find out how here</a>) </label>
-      <textarea class="form-control" id="googleMapsLink" name="postBody" rows="1" placeholder="Enter Post"></textarea>
+      <textarea class="form-control" id="googleMapsLink" name="postBody" rows="1" placeholder="Enter Google Maps shared list link"></textarea>
     </div>
 
     <div class="form-group">
@@ -20,39 +57,4 @@
     <button type="submit" class="btn btn-primary">Publish</button>
   </form>
 
-<%- include('partials/footer') %>
-
-<!-- <script>
-  // Function to validate if the input is a valid Google Maps link
-  function isValidGoogleMapsLink(input) {
-    // Google Maps links typically start with "https://maps.google.com/" or "https://goo.gl/maps/"
-    const googleMapsLinkPattern = /^https:\/\/(maps\.google\.com|goo\.gl\/maps)\/.+/i;
-    return googleMapsLinkPattern.test(input);
-  }
-
-  // Function to handle form submission
-  function handleSubmit(event) {
-    event.preventDefault(); // Prevent form submission for now
-
-    const inputField = document.getElementById("googleMapsLink");
-    const inputValue = inputField.value.trim();
-
-    if (isValidGoogleMapsLink(inputValue)) {
-      // If the input is valid, you can proceed with form submission or other actions
-      // For example, you can submit the form using AJAX or perform any other logic here.
-      alert("Valid Google Maps link: " + inputValue);
-    } else {
-      // If the input is not a valid Google Maps link, display an error message or take appropriate action
-      alert("Please enter a valid Google Maps link.");
-    }
-  }
-
-  // Add form submission event listener
-  const form = document.querySelector("form");
-  form.addEventListener("submit", handleSubmit);
-</script> -->
-
-<!-- <div class="form-group">
-  <label for="exampleInputPost">Google Maps Shared Link</label>
-  <textarea class="form-control" name="postBody" rows="1" placeholder="Enter Post"></textarea>
-</div> -->
+<%- include('partials/footer') %> 
