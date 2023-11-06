@@ -26,7 +26,7 @@
     const validationMessage = document.getElementById('validationMessage');
     
     // Check if the link contains 'goo.gl/maps'
-    if (!googleMapsLink.includes('goo.gl/maps')) {
+    if (!googleMapsLink.includes('goo.gl/')) {
       validationMessage.textContent = 'Please enter a valid Google Maps Shared List link.';
       return false; // Prevent form submission
     } else {
